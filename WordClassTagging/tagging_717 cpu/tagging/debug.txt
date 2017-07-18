@@ -1,0 +1,47 @@
+CPU epoch time : 20335.000000
+1 precise: 0.471935
+CPU epoch time : 20739.000000
+2 precise: 0.495528
+CPU epoch time : 19386.000000
+3 precise: 0.519572
+CPU epoch time : 20545.000000
+CPU epoch time : 1974028.000000
+1 precise: 0.900548
+CPU epoch time : 1991734.000000
+2 precise: 0.923970
+CPU epoch time : 1935600.000000
+3 precise: 0.934653
+CPU epoch time : 1912443.000000
+4 precise: 0.940627
+CPU epoch time : 1921472.000000
+5 precise: 0.944646
+CPU epoch time : 1912502.000000
+6 precise: 0.947400
+CPU epoch time : 1916854.000000
+7 precise: 0.949255
+CPU epoch time : 1916176.000000
+8 precise: 0.950256
+CPU epoch time : 1908719.000000
+9 precise: 0.951101
+CPU epoch time : 1904098.000000
+10 precise: 0.951637
+CPU epoch time : 1904093.000000
+11 precise: 0.952055
+CPU epoch time : 1906370.000000
+12 precise: 0.952242
+CPU epoch time : 1904514.000000
+13 precise: 0.952087
+CPU epoch time : 1902391.000000
+14 precise: 0.952265
+CPU epoch time : 1906183.000000
+15 precise: 0.952242
+CPU epoch time : 1904813.000000
+16 precise: 0.952211
+CPU epoch time : 1908205.000000
+17 precise: 0.952149
+CPU epoch time : 1902758.000000
+18 precise: 0.952102
+CPU epoch time : 1903037.000000
+19 precise: 0.952017
+CPU epoch time : 1903187.000000
+20 precise: 0.952172
