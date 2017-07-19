@@ -17,12 +17,13 @@
     |20| 	20 |		39 	|	9| 	13| 20|	 20| 24| 9| 19|	   22   | 6|
 
 - FLOW
-```mermaid
-graph TD;
-  FileRead-->Dictionary;
-  Dictionary-->Train&TestDataSet;
-  Train&TestDataSet-->Train&Test;
-```
+<!--```mermaid-->
+<!--graph TD;-->
+  <!--FileReadDictionary;-->
+  <!--Dictionary->Train&TestDataSet;-->
+  <!--Train&TestDataSet->Train&Test;-->
+<!--```-->
+
 
 	1. 전체 영문 txt 파일을 읽어들여 사용된 단어를 수집하고 단어에 대한 번호를 부여한다. (단어번호와 품사종류에 대한 Matching)
 	
