@@ -5,54 +5,46 @@
 
 
 - 품사 Tagging
-	
-    	주어진 문장에서 각 단어가 어떤 품사인지를 분류하는 것
+	주어진 문장에서 각 단어가 어떤 품사인지를 분류하는 것
 
 - Input data
-		
-        1. 영문 txt 파일
-        2. txt 파일의 각 단어에 대한 정답 (45개의 품사)  	
-	| W.R.| Grace | holds | three | of | Grace | Energy | 's | seven | board | seats | .|
-	|:---:|:-----:|:-----:|:-----:|:--:|:-----:|:------:|:--:|:-----:|:-----:|:-----:|::|
-    |20| 	20 |		39 	|	9| 	13| 20|	 20| 24| 9| 19|	   22   | 6|
+   1. 영문 txt 파일
+   2. txt 파일의 각 단어에 대한 정답 (45개의 품사)
+
+| W.R.| Grace | holds | three | of | Grace | Energy | 's | seven | board | seats | .|
+|:---:|:-----:|:-----:|:-----:|:--:|:-----:|:------:|:--:|:-----:|:-----:|:-----:|::|
+|20| 	20 |		39 	|	9| 	13| 20|	 20| 24| 9| 19|	   22   | 6|
 
 - FLOW
 <!--```mermaid-->
 <!--graph TD;-->
-  <!--FileReadDictionary;-->
-  <!--Dictionary->Train&TestDataSet;-->
-  <!--Train&TestDataSet->Train&Test;-->
+<!--FileReadDictionary;-->
+<!--Dictionary->Train&TestDataSet;-->
+<!--Train&TestDataSet->Train&Test;-->
 <!--```-->
-
-
-	1. 전체 영문 txt 파일을 읽어들여 사용된 단어를 수집하고 단어에 대한 번호를 부여한다. (단어번호와 품사종류에 대한 Matching)
-	
-    2. 각 단어에 대한 사전을 생성한다. (각 단어번호로 50개의 random number를 할당한다.)
-
-	3. 문장에서 단어 주위의 1 단어를 포함 총 3개의 단어의 사전 값, 150개의 float 을 한개의 Input data로 Train을 수행한다. 
-	결과로 NN의 parameter와 word Dictionary 들도 갱신한다.
-    
-    4. test 를 수행한다.
+1. 전체 영문 txt 파일을 읽어들여 사용된 단어를 수집하고 단어에 대한 번호를 부여한다. (단어번호와 품사종류에 대한 Matching)
+2. 각 단어에 대한 사전을 생성한다. (각 단어번호로 50개의 random number를 할당한다.)
+3. 문장에서 단어 주위의 1 단어를 포함 총 3개의 단어의 사전 값, 150개의 float 을 한개의 Input data로 Train을 수행한다. 결과로 NN의 parameter와 word Dictionary 들도 갱신한다.
+4. test 를 수행한다.
 
 
 - 결과
+AP corpus 약 60,000 문장 1,100,000개의 단어을 이용해 train을 수행, 10,000 문장으로 test를 진행 하였다. 생성된 단어의 수는 약 6만 단어가 생성 되었다.
 
-	AP corpus 약 60,000 문장 1,100,000개의 단어을 이용해 train을 수행, 10,000 문장으로 test를 진행 하였다. 생성된 단어의 수는 약 6만 단어가 생성 되었다.
-	hidden layer -> 200개의 TLU 구성했을때 
-    CPU epoch time : 338965.000000
-    ```
+```hidden layer -> 200개의 TLU```
+```	
+CPU epoch time : 338965.000000
 1 precise: 0.900842
 CPU epoch time : 333389.000000
 2 precise: 0.925522
 CPU epoch time : 334645.000000
 ...
-22 precise: 0.952963
 CPU epoch time : 340750.000000
+22 precise: 0.952963
 ```
 
 - 개선 사항
-
-	단어에 대한 어근분리작업이 입력되는 문장에 대해 수행되어야 한다.
+단어에 대한 어근분리작업이 입력되는 문장에 대해 수행되어야 한다.
 
 
 
@@ -69,16 +61,13 @@ CPU epoch time : 340750.000000
  시스템이 출력한 확률 분포와 정답의 분포 사이의 거리를 계산한다. 정답의 확률분포란 45개의 최종층중 정답의 뉴런만 1 나머지는 0을 갖는 분포이다. ***훈련의 최종목표는 이 함수의 값을 최소로 갖는 파라미터들 구하는 것***이다.
  **Soft Max** : 최종층의 각 뉴런의 출력을 이용하여 각 뉴런이 시스템의 출력으로 결정될 확률로 만들어준다. 즉 최종층의 출력을 확률분포로 만든다.
 **sigmoid** : 각 뉴런의 출력을 미분가능한 (-1,1) 로 바꾼다.
- 
- **forward**
+**forward**
  	한 층의 TLU로 부터 다음 층으로 값을 전달하는 과정. Loss를 구한다.
- 
- **backward**
+**backward**
  	Loss 를 이용, delta를 구한다.
-    
 **update**
 	delta를 이용해서 모든 Parameter들을 갱신한다. 품사 Tagging에서는 dictionary도 갱신한다.
-    
+
 ##### 정의
 in~i~^l^=sum(f~j~^l-1^ *  weight~ji~^l^) + bias~i~^l^
 f~i~^l^=sigmoid(in~i~^l^)
@@ -103,7 +92,7 @@ parameter 와 Loss 가 함수 관계를 이루고 있기때문에 Loss를 최소
 loss
 = sum(t~fi~*lny~fi~)
 = -t~0~*lny~0~ + (-t~1~*lny~1~) + .. + (-t~i~*lny~i~) + ... 	(t~0~=t~1~=..=0, t~g~=1)
-= -t~fg~* lny~fg~     
+= -t~fg~* lny~fg~
 = -lny~fg~	(y~fg~=e^fg^/sum(e^fi^))
 = -(ln e^fg^ - ln sum(e^fi^))		  (g , i 는 각각 g, i 번째 뉴런의 출력값 f~g~,f~i~이다)
 = ln sum(e^fi^) - f~g~
@@ -125,7 +114,7 @@ dE/dweight~ji~^l^
 = f~1~^l-1^ *  weight~1i~^l^ + f~2~^l-1^ *  weight~2i~^l^ + ... + f~j~^l-1^ *  weight~ji~^l^ + ... + bias~i~^l^
 
 - din~i~^l^/dweight~ji~^l^
-=  f~j~^l-1^	 
+=  f~j~^l-1^
 - din~i~^l^/dbias~i~^l^
 = 1
 
